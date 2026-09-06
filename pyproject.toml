@@ -1,0 +1,33 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "tzledger"
+version = "0.1.0"
+description = "Fail-closed timezone loader for time-series corpora - every read leaves an audit record."
+readme = "README.md"
+requires-python = ">=3.9"
+license = { file = "LICENSE" }
+authors = [{ name = "Cheng Ming-Chi" }]
+keywords = ["timezone", "pandas", "time-series", "data-quality", "reproducibility"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Topic :: Scientific/Engineering :: Information Analysis",
+    "Intended Audience :: Developers",
+]
+dependencies = ["pandas>=2.0"]
+
+[project.optional-dependencies]
+dev = ["pytest>=7.0"]
+
+[project.urls]
+Homepage = "https://github.com/hababa193/tzledger"
+
+[tool.setuptools.packages.find]
+include = ["tzledger*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
