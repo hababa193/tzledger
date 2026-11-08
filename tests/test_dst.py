@@ -24,8 +24,10 @@ from tzledger import UnresolvedTimezone
 def test_declarative_conversion_handles_dst(dst_loader, dst_corpus, dst_expected_utc):
     """★宣告式轉換橫跨 DST 轉換點仍然得到連續的時間軸。"""
     df = dst_loader.read_ts(dst_corpus / 'NYSE_1min_2023.csv', usecols=['close'])
+    # freq='infer':讀進來的索引沒有 freq,預期值有 <Minute>;pandas 4 起會比對 freq。
+    # 不用 check_freq=False —— pandas 2 的 assert_index_equal 沒有這個參數
     pd.testing.assert_index_equal(
-        pd.DatetimeIndex(df['ts']), dst_expected_utc, check_names=False)
+        pd.DatetimeIndex(df['ts'], freq='infer'), dst_expected_utc, check_names=False)
 
     gaps = pd.Series(df['ts']).diff().dropna().unique()
     assert list(gaps) == [pd.Timedelta(minutes=1)], '時間軸出現缺口'
