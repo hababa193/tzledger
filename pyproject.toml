@@ -7,7 +7,7 @@ name = "tzledger"
 version = "0.1.0"
 description = "Fail-closed timezone loader for time-series corpora - every read leaves an audit record."
 readme = "README.md"
-requires-python = ">=3.9"
+requires-python = ">=3.11"
 license = { file = "LICENSE" }
 authors = [{ name = "Cheng Ming-Chi" }]
 keywords = ["timezone", "pandas", "time-series", "data-quality", "reproducibility"]

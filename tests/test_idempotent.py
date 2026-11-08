@@ -127,7 +127,7 @@ def test_uninstall_restores_plain_behaviour(loader, corpus):
     uninstall()
     assert not is_installed()
     raw = pd.read_csv(corpus / 'AAA_1min_2023.csv')
-    assert raw['timestamp'].dtype == object      # 還原後就是普通的字串欄
+    assert pd.api.types.is_string_dtype(raw['timestamp'])   # 還原後就是普通的字串欄
 
 
 def test_non_corpus_files_pass_through(loader, corpus):
@@ -142,7 +142,7 @@ def test_non_corpus_files_pass_through(loader, corpus):
 
     install(loader)
     df = pd.read_csv(other)
-    assert df['timestamp'].dtype == object       # 原樣通過,沒被解析
+    assert pd.api.types.is_string_dtype(df['timestamp'])    # 原樣通過,沒被解析
     assert len(loader.ledger) == 0               # 也沒進 ledger
 
 

@@ -320,9 +320,12 @@ class Loader:
         """
         try:
             return stamps.dt.tz_localize(target_tz)
-        except Exception as exc:                      # pytz/zoneinfo 的例外型別不統一
+        except Exception as exc:
+            # 例外型別不統一:pandas 2 丟 pytz 的 NonExistentTimeError / AmbiguousTimeError,
+            # pandas 3 不再依賴 pytz,改丟一般 ValueError —— 只能連訊息一起認
             kind = type(exc).__name__
-            if 'Ambiguous' in kind or 'NonExistent' in kind:
+            text = f'{kind} {exc}'.lower()
+            if 'nonexistent' in text or 'ambiguous' in text:
                 raise UnresolvedTimezone(
                     f'[tzledger]「{name}」含在 {target_tz} 不存在或有歧義的本地時間'
                     f'({kind})。\n'

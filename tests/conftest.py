@@ -61,10 +61,13 @@ def corpus(tmp_path: Path) -> Path:
     _write(root / 'CCC_1min_2023.csv', aware.strftime('%Y-%m-%dT%H:%M:%S+00:00'))
 
     # ④ epoch 毫秒 → 無歧義
-    _write(root / 'DDD_1min_2023.csv', (aware.astype('int64') // 10 ** 6))
+    #   先固定成 ns 再換算:pandas 3 的 date_range 預設是 us 精度,
+    #   直接 astype('int64') 會差三個數量級
+    epoch_ns = aware.as_unit('ns').astype('int64')
+    _write(root / 'DDD_1min_2023.csv', epoch_ns // 10 ** 6)
 
     # ⑤ epoch 秒 → 無歧義
-    _write(root / 'EEE_1min_2023.csv', (aware.astype('int64') // 10 ** 9))
+    _write(root / 'EEE_1min_2023.csv', epoch_ns // 10 ** 9)
 
     # ⑥ 裸字串且**不在判定表裡** → 應該被 fail-closed 擋下
     _write(root / 'ZZZ_1min_2023.csv', naive.strftime('%Y-%m-%d %H:%M:%S'))

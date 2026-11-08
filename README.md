@@ -5,7 +5,7 @@
 時間序列的強制載入層。讀進來的 `ts` 欄保證是 tz-aware UTC；判不出時區的檔**直接拒絕載入**；每一次載入都留下可稽核的紀錄。
 
 [![tests](https://github.com/hababa193/tzledger/actions/workflows/ci.yml/badge.svg)](https://github.com/hababa193/tzledger/actions/workflows/ci.yml)
-![python](https://img.shields.io/badge/python-3.9%2B-blue)
+![python](https://img.shields.io/badge/python-3.11%2B-blue)
 ![license](https://img.shields.io/badge/license-MIT-green)
 
 ---
